@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Info.css';
+import ReactStars from 'react-stars';
 import Axios from 'axios';
 import nullPhoto from '../images/placeholder.png';
 
@@ -11,6 +12,8 @@ export default class Info extends Component {
         this.state = {
             media: [],
             loading: true,
+            averageStars: [],
+            trailer: ""
         }
     }
 
@@ -23,9 +26,17 @@ export default class Info extends Component {
                 this.setState({
                     media: response.data,
                     loading: false
-                })
-            })
-    };
+                });
+                console.log(this.state.media);
+            });
+        Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos?api_key=843677e73368e75286271faf9ac60e2e&language=en-US`)
+            .then(response => {
+                this.setState({
+                    trailer: response.data.results[0].key,
+                });
+                console.log(this.state.trailer);
+            });
+    }
 
     render() {
         let loadingText;
@@ -34,13 +45,20 @@ export default class Info extends Component {
             loadingText = <p>Loading...</p>;
         }
 
-        let { media } = this.state;
+        let { media, trailer } = this.state;
         let title;
+        let filteredDate;
 
         if (media.title) { //movies title
             title = media.title;
         }else if(media.name){ //series title
             title = media.name;
+        }
+
+        if(media.first_air_date){
+            filteredDate = media.first_air_date;
+        }else if(media.release_date){
+            filteredDate = media.release_date;
         }
 
         document.title = `Chachodede | ${title}`;
@@ -51,15 +69,74 @@ export default class Info extends Component {
         } else {
             imagePath = `https://image.tmdb.org/t/p/w500/${media.poster_path}`;
         }
-        
+
+        let background= {
+            width: 'auto',
+            height: '400px',
+            backgroundImage: 'url(' + `https://image.tmdb.org/t/p/original/${ media.backdrop_path }` + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundAttachment: 'fixed'
+        };
+
+        // let releaseDate = '';
+        //
+        // if(media.release_date !== ""){ //avoid null year data to show as NaN
+        //     let date = new Date(media.release_date);
+        //     let x = toString(date.getDate());
+        //     let y = toString(date.getMonth());
+        //     let z = toString(date.getFullYear());
+        //     releaseDate = x + "-" + y + "-" + z;
+        // }else{
+        //     releaseDate = 'Unknown';
+        // }
+
+        let x = '';
+        let y = '';
+        let z = '';
+        let releaseDate = "";
+
+        if(filteredDate !== "") {
+            let date = new Date(filteredDate);
+                x = date.getDate();
+                y = date.getMonth();
+                z = date.getFullYear();
+                releaseDate = `${x}-${y}-${z}`;
+        }else {
+            releaseDate = "unknown";
+        }
+
+        console.log(this.state.averageStars);
         return (
             <div className='info'>
                 {loadingText}
-                <div className="media">
-                    <div className="media-header">
-                        <h3>{title}</h3>
+                <div style={background}>
+                </div>
+                <div className='caja'>
+                    <div className="w3-container image-info">
+                        <img className='image-info' src={imagePath} alt={`img${media.id}`} />
                     </div>
-                    <img className='image-info' src={imagePath} alt={`img${media.id}`} />
+                    <div className='w3-container contentBox'>
+                        <div className="media-header">
+                            <h3>{title}</h3>
+                            <ReactStars className='stars' count={10} value={media.vote_average} size={20} color2={'#ffd700'} edit={false}/>
+                            <p>{media.vote_average}</p>
+                        </div>
+                        <div className="infoBox">
+                            {media.number_of_seasons && <p><b>Seasons:</b> {media.number_of_seasons}</p>}
+                            {media.number_of_episodes && <p><b>Episodes:</b> {media.number_of_episodes}</p>}
+                            {media.tagline && <p><em>"{media.tagline}"</em></p>}
+                            <p><b>Release date:</b> {releaseDate}</p>
+                            <p>{media.overview}</p>
+                        </div>
+                        <div>
+                            <p><b>Trailer:</b></p>
+                            {trailer !== "" && <iframe width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen></iframe>}
+                        </div>
+                    </div>
                 </div>
             </div>
         )

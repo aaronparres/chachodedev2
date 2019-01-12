@@ -25,8 +25,8 @@ export default class Media extends Component {
 
 
         return (
-            <div className="media w3-display-container">
-                <div className='w3-display-topmiddle'>
+            <div className="media w3-display-container ">
+                <div className='w3-display-mid'>
                     <div className='w3-display-container contenedor'>
                         <Link to={`/info/${media_type}/${index}`}><img className='image w3-round' src={imagePath} alt={`img${index}`} /></Link>
                         <div className="w3-display-bottomleft w3-container votes">
