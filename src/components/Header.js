@@ -22,9 +22,6 @@ export default class Header extends Component {
             </div>
           </div>
         </div>
-        <div className="right-side">
-          <Link to="/login">Login</Link>
-        </div>
       </header>
     )
   }

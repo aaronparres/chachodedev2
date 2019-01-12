@@ -25,7 +25,6 @@ class App extends Component {
             <div className='container-info'>
                 <Route path="/info/:media_type/:media_id" component={Info} />
             </div>
-          <Route path="/login" component={Login} />
           <Footer />
         </div>
       </Router>
