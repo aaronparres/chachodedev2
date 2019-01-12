@@ -6,7 +6,6 @@ import Header from './components/Header';
 import Movies from './components/Movies';
 import Home from './components/Home';
 import Series from './components/Series';
-import Login from './components/Login';
 import Footer from './components/Footer';
 import Info from './components/Info';
 
