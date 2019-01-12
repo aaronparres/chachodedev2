@@ -1,0 +1,13 @@
+.App {
+}
+.container-home{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
