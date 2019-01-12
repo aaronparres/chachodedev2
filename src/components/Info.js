@@ -3,6 +3,7 @@ import './Info.css';
 import ReactStars from 'react-stars';
 import Axios from 'axios';
 import nullPhoto from '../images/placeholder.png';
+import nullBackdrop from '../images/backdrop.png';
 
 
 export default class Info extends Component {
@@ -27,15 +28,21 @@ export default class Info extends Component {
                     media: response.data,
                     loading: false
                 });
-                console.log(this.state.media);
+                
             });
         Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos?api_key=843677e73368e75286271faf9ac60e2e&language=en-US`)
             .then(response => {
                 this.setState({
                     trailer: response.data.results[0].key,
-                });
-                console.log(this.state.trailer);
-            });
+                })
+
+                
+            })
+            .catch(err => {
+                this.setState({
+                    trailer: "XcRGr2HGwuo", //default video if trailer is not found
+                })
+        })
     }
 
     render() {
@@ -51,13 +58,13 @@ export default class Info extends Component {
 
         if (media.title) { //movies title
             title = media.title;
-        }else if(media.name){ //series title
+        } else if (media.name) { //series title
             title = media.name;
         }
 
-        if(media.first_air_date){
+        if (media.first_air_date) {
             filteredDate = media.first_air_date;
-        }else if(media.release_date){
+        } else if (media.release_date) {
             filteredDate = media.release_date;
         }
 
@@ -70,43 +77,38 @@ export default class Info extends Component {
             imagePath = `https://image.tmdb.org/t/p/w500/${media.poster_path}`;
         }
 
-        let background= {
+        let backdropImage;
+        if (media.backdrop_path === null) {
+            backdropImage = `url('${nullBackdrop}')`;
+        } else {
+            backdropImage = `url(https://image.tmdb.org/t/p/original/${media.backdrop_path})`;
+        }
+
+        let background = {
             width: 'auto',
             height: '400px',
-            backgroundImage: 'url(' + `https://image.tmdb.org/t/p/original/${ media.backdrop_path }` + ')',
+            backgroundImage: backdropImage,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundAttachment: 'fixed'
         };
-
-        // let releaseDate = '';
-        //
-        // if(media.release_date !== ""){ //avoid null year data to show as NaN
-        //     let date = new Date(media.release_date);
-        //     let x = toString(date.getDate());
-        //     let y = toString(date.getMonth());
-        //     let z = toString(date.getFullYear());
-        //     releaseDate = x + "-" + y + "-" + z;
-        // }else{
-        //     releaseDate = 'Unknown';
-        // }
 
         let x = '';
         let y = '';
         let z = '';
         let releaseDate = "";
 
-        if(filteredDate !== "") {
+        if (filteredDate !== "") {
             let date = new Date(filteredDate);
-                x = date.getDate();
-                y = date.getMonth();
-                z = date.getFullYear();
-                releaseDate = `${x}-${y}-${z}`;
-        }else {
+            x = date.getDate();
+            y = date.getMonth();
+            z = date.getFullYear();
+            releaseDate = `${x}-${y}-${z}`;
+        } else {
             releaseDate = "unknown";
         }
 
-        console.log(this.state.averageStars);
+        
         return (
             <div className='info'>
                 {loadingText}
@@ -119,7 +121,7 @@ export default class Info extends Component {
                     <div className='w3-container contentBox'>
                         <div className="media-header">
                             <h3>{title}</h3>
-                            <ReactStars className='stars' count={10} value={media.vote_average} size={20} color2={'#ffd700'} edit={false}/>
+                            <ReactStars className='stars' count={10} value={media.vote_average} size={20} color2={'#ffd700'} edit={false} />
                             <p>{media.vote_average}</p>
                         </div>
                         <div className="infoBox">
@@ -131,10 +133,10 @@ export default class Info extends Component {
                         </div>
                         <div>
                             <p><b>Trailer:</b></p>
-                            {trailer !== "" && <iframe width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen></iframe>}
+                            {trailer !== "" && <iframe  title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen></iframe>}
                         </div>
                     </div>
                 </div>
