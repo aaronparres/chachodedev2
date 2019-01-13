@@ -14,20 +14,6 @@ export default class Series extends Component {
         }
     }
 
-    /*     componentDidMount = () => {
-            let { query } = this.state;
-            Axios.get(`https://api.themoviedb.org/3/search/tv?api_key=843677e73368e75286271faf9ac60e2e&language=en-US&query=${query}`)
-                .then(response => {
-                    this.setState({
-                        series: response.data.results,
-                        loading: false
-                    })
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }; */
-
     onChange = event => {
         this.setState({
             query: event.target.value
