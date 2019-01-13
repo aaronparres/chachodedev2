@@ -28,7 +28,7 @@ export default class Info extends Component {
                     media: response.data,
                     loading: false
                 });
-                
+
             });
         Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos?api_key=843677e73368e75286271faf9ac60e2e&language=en-US`)
             .then(response => {
@@ -36,13 +36,15 @@ export default class Info extends Component {
                     trailer: response.data.results[0].key,
                 })
 
-                
+
             })
             .catch(err => {
                 this.setState({
                     trailer: "XcRGr2HGwuo", //default video if trailer is not found
                 })
-        })
+            })
+
+        window.scrollTo(0, 0); //avoid scroll problem when clicking a media that is scrolled down
     }
 
     render() {
@@ -108,7 +110,7 @@ export default class Info extends Component {
             releaseDate = "unknown";
         }
 
-        
+
         return (
             <div className='info'>
                 {loadingText}
@@ -129,11 +131,16 @@ export default class Info extends Component {
                             {media.number_of_episodes && <p><b>Episodes:</b> {media.number_of_episodes}</p>}
                             {media.tagline && <p><em>"{media.tagline}"</em></p>}
                             <p><b>Release date:</b> {releaseDate}</p>
+                            {media.runtime && <p><b>Runtime:</b> {media.runtime} min</p>}
+                            {media.episode_run_time && <p><b>Episode runtime:</b> {media.episode_run_time[0]} min</p>}
+                            {media.genres && <span><b>Genres: </b>
+                                {media.genres.map((genre) => <span className="genreStyle" key={genre.id}>&nbsp;{genre.name}&nbsp;</span>)}</span>}
+                            <p><strong>Sinopsis:</strong></p>
                             <p>{media.overview}</p>
                         </div>
                         <div>
                             <p><b>Trailer:</b></p>
-                            {trailer !== "" && <iframe  title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
+                            {trailer !== "" && <iframe title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen></iframe>}
