@@ -41,9 +41,9 @@ export default class Info extends Component {
             })
             .catch(err => {
                 console.log(err);
-/*                 this.setState({
-                    trailer: "XcRGr2HGwuo", //default video if trailer is not found
-                }) */
+                /*                 this.setState({
+                                    trailer: "XcRGr2HGwuo", //default video if trailer is not found
+                                }) */
             })
         Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/credits?api_key=843677e73368e75286271faf9ac60e2e`)
             .then(response => {
@@ -164,13 +164,20 @@ export default class Info extends Component {
                             )}</div>}
 
                         <div>
-                            <p><b>Trailers ({trailer.length}):</b></p>
-                            <div className="marginTrailerBox">
-                                {trailer !== "" && trailer.map((trailer, index) => <iframe className="w3-margin" key={index} title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer.key}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen></iframe>)}
-                            </div>
+                            {trailer.length > 0 && <div><p><b>Trailers ({trailer.length}):</b></p>
+                                <div className="marginTrailerBox">
+                                    {trailer !== "" && trailer.map((trailer, index) => <iframe className="w3-margin" key={index} title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer.key}`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen></iframe>)}
+                                </div></div>}
+                            {trailer.length <= 0 && <div><p><strong>Easter-egg:</strong></p>
+                                <div className="marginTrailerBox">
+                                    <iframe className="w3-margin" key={"ee"} title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/XcRGr2HGwuo`}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen></iframe>
+                                </div></div>}
                         </div>
                     </div>
                 </div>
