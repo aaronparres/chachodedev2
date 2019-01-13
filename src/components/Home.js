@@ -47,7 +47,7 @@ export default class Home extends Component {
         return (
             <div className='w3-container home'>
                 {loadingText}
-                <div className="w3-container w3-col m12 movie">
+                <div className="w3-container movie">
                     <h2>Movies</h2>
                     <div>
                         {movies.map((media) =>

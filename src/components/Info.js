@@ -54,7 +54,7 @@ export default class Info extends Component {
                 console.log(err);
             })
 
-       window.scrollTo(0, 0); //avoid scroll problem when clicking a media that is scrolled down
+        window.scrollTo(0, 0); //avoid scroll problem when clicking a media that is scrolled down
     }
 
     render() {
@@ -150,11 +150,11 @@ export default class Info extends Component {
                         </div>
                         {cast.length > 0 && <p><strong>Cast:</strong></p>}
                         {cast.length > 0 && <div className="actorsBox">
-                            {cast.slice(0, 6).map((actor,index) =>
+                            {cast.slice(0, 6).map((actor, index) =>
                                 <div key={index} className="eachActor w3-card">
-                                    {actor.profile_path ? 
-                                        <img height="100px" src={`https://image.tmdb.org/t/p/w138_and_h175_face${actor.profile_path}`} alt={actor.id} /> 
-                                        : <img height="100px" src={nullActor} alt={actor.id} /> }
+                                    {actor.profile_path ?
+                                        <img height="100px" src={`https://image.tmdb.org/t/p/w138_and_h175_face${actor.profile_path}`} alt={actor.id} />
+                                        : <img height="100px" src={nullActor} alt={actor.id} />}
                                     <ul>
                                         <li className="actorName">{actor.name}</li>
                                         <li>{actor.character.slice(0, 25)}</li>
