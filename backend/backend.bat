@@ -1,1 +1,0 @@
-json-server --watch --port 4000 --delay 600 db.json
