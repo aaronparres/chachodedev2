@@ -40,9 +40,10 @@ export default class Info extends Component {
 
             })
             .catch(err => {
-                this.setState({
+                console.log(err);
+/*                 this.setState({
                     trailer: "XcRGr2HGwuo", //default video if trailer is not found
-                })
+                }) */
             })
         Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/credits?api_key=843677e73368e75286271faf9ac60e2e`)
             .then(response => {
