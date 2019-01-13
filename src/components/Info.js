@@ -14,7 +14,7 @@ export default class Info extends Component {
             media: [],
             loading: true,
             averageStars: [],
-            trailer: "",
+            trailer: [],
             cast: []
         }
     }
@@ -34,7 +34,7 @@ export default class Info extends Component {
         Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos?api_key=843677e73368e75286271faf9ac60e2e&language=en-US`)
             .then(response => {
                 this.setState({
-                    trailer: response.data.results[0].key,
+                    trailer: response.data.results,
                 })
 
 
@@ -163,12 +163,13 @@ export default class Info extends Component {
                             )}</div>}
 
                         <div>
-                            <p><b>Trailer:</b></p>
-                            {trailer !== "" && <iframe title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen></iframe>}
-
+                            <p><b>Trailers ({trailer.length}):</b></p>
+                            <div className="marginTrailerBox">
+                                {trailer !== "" && trailer.map((trailer, index) => <iframe className="w3-margin" key={index} title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer.key}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen></iframe>)}
+                            </div>
                         </div>
                     </div>
                 </div>
