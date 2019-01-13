@@ -38,7 +38,7 @@ export default class Media extends Component {
                     </div>
                 </div>
                 <div className="media-header w3-display-bottomleft">
-                    <h3>{title}</h3>
+                    <h3>{title.slice(0, 40)}{title.length > 40 && " ..."}</h3>
                 </div>
             </div>
         )
