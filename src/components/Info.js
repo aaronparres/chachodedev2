@@ -4,7 +4,7 @@ import ReactStars from 'react-stars';
 import Axios from 'axios';
 import nullPhoto from '../images/placeholder.png';
 import nullBackdrop from '../images/backdrop.png';
-
+import nullActor from '../images/actorNull.png';
 
 export default class Info extends Component {
 
@@ -14,7 +14,8 @@ export default class Info extends Component {
             media: [],
             loading: true,
             averageStars: [],
-            trailer: ""
+            trailer: "",
+            cast: []
         }
     }
 
@@ -43,8 +44,17 @@ export default class Info extends Component {
                     trailer: "XcRGr2HGwuo", //default video if trailer is not found
                 })
             })
+        Axios.get(`https://api.themoviedb.org/3/${mediaType}/${mediaId}/credits?api_key=843677e73368e75286271faf9ac60e2e`)
+            .then(response => {
+                this.setState({
+                    cast: response.data.cast,
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
-        window.scrollTo(0, 0); //avoid scroll problem when clicking a media that is scrolled down
+       window.scrollTo(0, 0); //avoid scroll problem when clicking a media that is scrolled down
     }
 
     render() {
@@ -54,7 +64,7 @@ export default class Info extends Component {
             loadingText = <p>Loading...</p>;
         }
 
-        let { media, trailer } = this.state;
+        let { media, trailer, cast } = this.state;
         let title;
         let filteredDate;
 
@@ -138,12 +148,27 @@ export default class Info extends Component {
                             <p><strong>Sinopsis:</strong></p>
                             <p>{media.overview}</p>
                         </div>
+                        {cast.length > 0 && <p><strong>Cast:</strong></p>}
+                        {cast.length > 0 && <div className="actorsBox">
+                            {cast.slice(0, 6).map((actor,index) =>
+                                <div key={index} className="eachActor w3-card">
+                                    {actor.profile_path ? 
+                                        <img height="100px" src={`https://image.tmdb.org/t/p/w138_and_h175_face${actor.profile_path}`} alt={actor.id} /> 
+                                        : <img height="100px" src={nullActor} alt={actor.id} /> }
+                                    <ul>
+                                        <li className="actorName">{actor.name}</li>
+                                        <li>{actor.character.slice(0, 25)}</li>
+                                    </ul>
+                                </div>
+                            )}</div>}
+
                         <div>
                             <p><b>Trailer:</b></p>
                             {trailer !== "" && <iframe title="Youtube Trailer" width="560" height="315" src={`https://www.youtube.com/embed/${trailer}`}
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen></iframe>}
+
                         </div>
                     </div>
                 </div>

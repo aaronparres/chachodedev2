@@ -51,6 +51,31 @@
     margin-top: -15px;
 }
 
+.info .actorsBox {
+    display: flex;
+    margin-left: -10px;
+}
+
+.info .eachActor {
+    flex-direction: row;
+    margin: auto;
+    width: 175px;
+    margin-left: 1em;
+    font-size: 13px;
+    display: flex;
+}
+
+.info ul {
+    list-style: none;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin-top: 0;
+}
+
+.info .actorName {
+    color: rgb(0, 153, 255);
+}
+
 .info .caja .media-header h3 {
     font-size: 22px;
 }
