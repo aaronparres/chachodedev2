@@ -8,15 +8,12 @@ import nullActor from '../images/actorNull.png';
 
 export default class Info extends Component {
 
-    constructor() {
-        super();
-        this.state = {
-            media: [],
-            loading: true,
-            averageStars: [],
-            trailer: [],
-            cast: []
-        }
+    state = {
+        media: [],
+        loading: true,
+        averageStars: [],
+        trailer: [],
+        cast: []
     }
 
     componentDidMount = () => {

@@ -4,13 +4,10 @@ import Axios from 'axios';
 import Media from './Media';
 
 export default class Home extends Component {
-    constructor() {
-        super();
-        this.state = {
-            movies: [],
-            series: [],
-            loading: true,
-        }
+    state = {
+        movies: [],
+        series: [],
+        loading: true,
     }
 
     componentDidMount = () => {
@@ -51,7 +48,7 @@ export default class Home extends Component {
                     <h2>Movies</h2>
                     <div>
                         {movies.map((media) =>
-                            <Media key={media.id} index={media.id} image={media.poster_path} title={media.title} vote_avg={media.vote_average} media_type={"movie"} year={media.release_date}/>
+                            <Media key={media.id} index={media.id} image={media.poster_path} title={media.title} vote_avg={media.vote_average} media_type={"movie"} year={media.release_date} />
                         )}
                     </div>
                 </div>

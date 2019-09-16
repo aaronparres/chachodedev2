@@ -5,13 +5,11 @@ import Media from './Media';
 
 
 export default class Movies extends Component {
-    constructor() {
-        super();
-        this.state = {
-            movies: [],
-            query: "",
-            loading: false,
-        }
+
+    state = {
+        movies: [],
+        query: "",
+        loading: false,
     }
 
     onChange = event => {

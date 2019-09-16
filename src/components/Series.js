@@ -5,13 +5,11 @@ import Media from './Media';
 
 
 export default class Series extends Component {
-    constructor() {
-        super();
-        this.state = {
-            series: [],
-            query: "",
-            loading: false
-        }
+
+    state = {
+        series: [],
+        query: "",
+        loading: false
     }
 
     onChange = event => {
